@@ -9,6 +9,7 @@
   }
 
   header {
+    background-color: #e3dace;
     display: flex;
     justify-content: center;
   }
@@ -37,6 +38,7 @@
   
   main {
     /* width: 1024px; */
+    background-color: #e3dace;
     margin: 3rem ;
     margin: auto;
     display: grid;
@@ -52,7 +54,7 @@
   
   section {
     /* This element will be a grid item, but also a flex container */
-    background-color: #A2AAB0;
+    background-color: #e3dace;
     padding: 2rem;
     grid-row-start: 1;
     grid-row-end: 4;
@@ -95,8 +97,8 @@ section img:hover {
     margin: auto;
     line-height: 1.5rem;
     width: auto;
-    /* height: max-content; */
-  } */
+    height: max-content;
+    } */
 
   .hot {
     width: 220px;
