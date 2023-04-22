@@ -75,7 +75,7 @@ section img:hover {
     cursor: pointer;
   }
 
-  div {
+  #button {
     color: #142632;
     padding: .5rem 1rem;
     border-width: 1rem;
@@ -85,16 +85,20 @@ section img:hover {
     margin: 1rem;
     grid-area: 4 / 1 / 4 / 4;
   }
+
+  #chart {
+    grid-area: 4 / 4 / 6 / 6;
+  }
   
-  ul {
+  /* ul {
     grid-area: 4 / 4;
     margin: auto;
     line-height: 1.5rem;
     width: auto;
     /* height: max-content; */
-  }
+  } */
 
-  .glow-on-hover {
+  .hot {
     width: 220px;
     height: 50px;
     border: none;
@@ -107,7 +111,7 @@ section img:hover {
     border-radius: 10px;
   }
 
-  .glow-on-hover:before {
+  .hot:before {
     content: '';
     background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
     position: absolute;
@@ -124,19 +128,19 @@ section img:hover {
     border-radius: 10px;
   }
   
-  .glow-on-hover:active {
+  .hot:active {
     color: #142632;
   }
   
-  .glow-on-hover:active:after {
+  .hot:active:after {
     background: transparent;
   }
   
-  .glow-on-hover:hover:before {
+  .hot:hover:before {
     opacity: 1;
   }
   
-  .glow-on-hover:after {
+  .hot:after {
     z-index: -1;
     content: '';
     position: absolute;
@@ -156,6 +160,7 @@ section img:hover {
 
   footer {
     text-align: center;
+    margin-top: 3rem;
   }
 
   button {

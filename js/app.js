@@ -2,6 +2,36 @@
 
 let duckArray = [];
 
+let getDuckArray = localStorage.getItem('duckArray');
+
+if (getDuckArray) {
+  duckArray = JSON.parse(getDuckArray);
+} else {
+  let babyMob = new Duck('sweep', 'png');
+  let R2Dbag = new Duck('bag');
+  let bananaSlicer = new Duck('banana');
+  let iTP = new Duck('bathroom');
+  let toeBoots = new Duck('boots');
+  let selfDiner = new Duck('breakfast');
+  let ballGum = new Duck('bubbleGum');
+  let badChair = new Duck('chair');
+  let cthulhu = new Duck('cthulhu');
+  let duckMuzzle = new Duck('dog-duck');
+  let dMeat = new Duck('dragon');
+  let pentensils = new Duck('pen');
+  let dogBroom = new Duck('pet-sweep');
+  let sliceCutter = new Duck('scissors');
+  let sharkingBag = new Duck('shark');
+  let hanSolo = new Duck('tauntaun');
+  let uMeat = new Duck('unicorn');
+  let badContainer = new Duck('water-can');
+  let decanter = new Duck('wine-glass');
+  
+  duckArray.push(babyMob, R2Dbag, bananaSlicer, iTP, toeBoots, selfDiner, ballGum, badChair, cthulhu, duckMuzzle, dMeat, pentensils, dogBroom, sliceCutter, sharkingBag, hanSolo, uMeat, badContainer, decanter);
+}
+
+let indexArray = [];
+
 let myContainer = document.querySelector('section');
 
 let image1 = document.querySelector('section img:first-child');
@@ -22,28 +52,6 @@ function Duck(name, fileExtention = 'jpg') {
   this.votes = 0;
 }
 
-let babyMob = new Duck('sweep', 'png');
-let R2Dbag = new Duck('bag');
-let bananaSlicer = new Duck('banana');
-let iTP = new Duck('bathroom');
-let toeBoots = new Duck('boots');
-let selfDiner = new Duck('breakfast');
-let ballGum = new Duck('bubbleGum');
-let badChair = new Duck('chair');
-let cthulhu = new Duck('cthulhu');
-let duckMuzzle = new Duck('dog-duck');
-let dMeat = new Duck('dragon');
-let pentensils = new Duck('pen');
-let dogBroom = new Duck('pet-sweep');
-let sliceCutter = new Duck('scissors');
-let sharkingBag = new Duck('shark');
-let hanSolo = new Duck('tauntaun');
-let uMeat = new Duck('unicorn');
-let badContainer = new Duck('water-can');
-let decanter = new Duck('wine-glass');
-
-duckArray.push(babyMob, R2Dbag, bananaSlicer, iTP, toeBoots, selfDiner, ballGum, badChair, cthulhu, duckMuzzle, dMeat, pentensils, dogBroom, sliceCutter, sharkingBag, hanSolo, uMeat, badContainer, decanter);
-
 function selectRandomDuckNumber() {
   return Math.floor(Math.random() * duckArray.length);
 }
@@ -52,23 +60,16 @@ function renderDucks() {
 //   let duck1 = selectRandomDuckNumber();
 //   let duck2 = selectRandomDuckNumber();
 //   let duck3 = selectRandomDuckNumber();
-  let selectedImages = [];
-
-  while (selectedImages.length < 3) {
+  while (indexArray.length < 6) {
     let randomIndex = selectRandomDuckNumber();
-    // let selectedImage = duckArray[randomIndex];
     console.log(randomIndex);
-    if (!selectedImages.includes(randomIndex)) {
-      selectedImages.push(randomIndex);
+    if (!indexArray.includes(randomIndex)) {
+      indexArray.push(randomIndex);
     }
   }
-
-  let imageOneIndex = selectedImages.shift();
-  let imageTwoIndex = selectedImages.shift();
-  let imageThreeIndex = selectedImages.shift();
-
-
-
+  let imageOneIndex = indexArray.shift();
+  let imageTwoIndex = indexArray.shift();
+  let imageThreeIndex = indexArray.shift();
 
   image1.src = duckArray[imageOneIndex].src;
   image1.alt = duckArray[imageOneIndex].name;
@@ -98,21 +99,80 @@ function handleDuckClick(event) {
     myContainer.removeEventListener('click', handleDuckClick);
     viewResultsBtn.addEventListener('click', viewResults);
   }
+  let stringifyDuckArray = JSON.stringify(duckArray);
+  localStorage.setItem('duckArray', stringifyDuckArray);
 }
 
 function viewResults() {
-  let ul = document.querySelector('ul');
-  let li = document.createElement('li');
-  let result = ``;
+  renderChart();
+  viewResultsBtn.removeEventListener('click', viewResults);
+  // let ul = document.querySelector('ul');
+  // let li = document.createElement('li');
+  // let result = ``;
+  // for (let i = 0; i < duckArray.length; i++) {
+  //   result += `${duckArray[i].name} had ${duckArray[i].views} views, and ${duckArray[i].votes} votes. `;
+  // }
+  // li.textContent = result;
+  // ul.appendChild(li);
+}
+
+function renderChart() {
+  const ctx = document.getElementById('duckChart');
+  let duckNames = [];
+  let duckVotes = [];
+  let duckViews = [];
+
   for (let i = 0; i < duckArray.length; i++) {
-    result += `${duckArray[i].name} had ${duckArray[i].views} views, and ${duckArray[i].votes} votes. `;
+    console.log(duckArray[i]);
+    let name = duckArray[i].name;
+
+    duckNames.push(name);
+    duckVotes.push(duckArray[i].votes);
+    duckViews.push(duckArray[i].views);
   }
-  li.textContent = result;
-  ul.appendChild(li);
+
+  let config = {
+    type: 'bar',
+    data: {
+      labels: duckNames,
+      datasets: [
+        {
+          label: 'Votes',
+          data: duckVotes,
+          borderWidth: 1,
+          backgroundColor: [
+            '#e3dace'
+          ],
+          borderColor: [
+            '#62abbd'
+          ],
+        },
+        {
+          label: 'Views',
+          data: duckViews,
+          borderWidth: 1,
+          backgroundColor: [
+            '#A2aab0'
+          ],
+          borderColor: [
+            '#4c586F'
+          ],
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+  let myChart = new Chart(ctx, config);
 }
 
 renderDucks();
 
 myContainer.addEventListener('click', handleDuckClick);
 
-console.log(duckArray.votes);
+// console.log(duckArray.votes);
